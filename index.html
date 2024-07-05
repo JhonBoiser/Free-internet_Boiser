@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free internet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+        }
+        h1 {
+            color: #4a4a4a;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4a4a4a;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #764ba2;
+        }
+        #status {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .connected {
+            color: #4CAF50;
+        }
+        .disconnected {
+            color: #F44336;
+        }
+        #success-screen, #connecting-screen {
+            display: none;
+            text-align: center;
+        }
+        #success-screen i, #connecting-screen i {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        #success-screen i {
+            color: #4CAF50;
+        }
+        #connecting-screen i {
+            color: #FFA500;
+        }
+        #server-info {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        #server-info p {
+            margin: 5px 0;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            button {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div id="connection-form">
+            <h1>Kiss muna bago Connect😘</h1>
+            <form id="wifi-form">
+                <div class="form-group">
+                    <label for="ssid">Network Name (SSID):</label>
+                    <input type="text" id="ssid" name="ssid" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Connect</button>
+            </form>
+            <div id="status" class="disconnected">Disconnected</div>
+        </div>
+
+        <div id="connecting-screen">
+            <i class="fas fa-spinner fa-spin"></i>
+            <h2>Eto na...</h2>
+            <p>wait kalang ha.</p>
+        </div>
+
+        <div id="success-screen">
+            <i class="fas fa-check-circle">😂</i>
+            <h2>It's a Prank!</h2>
+            <p>hahahaha.</p>
+            <div id="server-info">
+                <p><strong>Server IP:</strong> <span id="server-ip"></span></p>
+                <p><strong>Port:</strong> <span id="server-port"></span></p>
+            </div>
+            <button id="disconnect-btn" style="margin-top: 15px;">Disconnect</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('wifi-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const ssid = document.getElementById('ssid').value;
+            const password = document.getElementById('password').value;
+
+            if (ssid && password) {
+                document.getElementById('connection-form').style.display = 'none';
+                document.getElementById('connecting-screen').style.display = 'block';
+
+                setTimeout(() => {
+                    document.getElementById('connecting-screen').style.display = 'none';
+                    document.getElementById('success-screen').style.display = 'block';
+                    document.getElementById('server-ip').textContent = '192.168.1.100';
+                    document.getElementById('server-port').textContent = '8080';
+                }, 3000);
+            } else {
+                alert('Please enter both SSID and password.');
+            }
+        });
+
+        document.getElementById('disconnect-btn').addEventListener('click', function() {
+            document.getElementById('success-screen').style.display = 'none';
+            document.getElementById('connection-form').style.display = 'block';
+            document.getElementById('status').textContent = 'Disconnected';
+            document.getElementById('status').className = 'disconnected';
+            document.getElementById('ssid').value = '';
+            document.getElementById('password').value = '';
+        });
+    </script>
+</body>
+</html>
